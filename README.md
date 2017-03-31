@@ -1,4 +1,4 @@
-[![Build Status](https://drone.io/github.com/0intro/libbele/status.png)](https://drone.io/github.com/0intro/libbele/latest)
+[![Build Status](https://travis-ci.org/0intro/libbele.svg?branch=master)](https://travis-ci.org/0intro/libbele)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/7835/badge.svg)](https://scan.coverity.com/projects/7835)
 
 Libbele
