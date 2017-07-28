@@ -1,2 +1,24 @@
 language: c
-script: make
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "lz3ASb2YqCCisYLBuIYwF4ABRe42nuyCGW9X06DeNBPkGSkzJuChn064Jw5QLPV8RMY4Ld6NCkEGuUur0FtBIfdQeYYvES9N2QhjUdCSVqgV4c9lI8n5D8RhE/dRG1hLsfaYh+i2RxZOSc1HPiWRGCyZ/HsAV5dmN9fMYfMQco5bGTGu0Lc0gSS312Yjjoz6KbO0I6Sz+M2w0R7KgWPObmY1ICwydT5Vhq3FxVrsBqvF8QCc9gJZs1fyIBSfKQnTZ55w2jIJ8bglA0vihQiy13l5NFnSLfvRVrEH6Gzlg9S0fTkPB02lSXXmwqMX7VJNUjLneHaHKkNTBZsWTP2+LHTB5Jbwhol1HG71JPcy9mqVJJQeGvzwkuflTBkAZ6FG0Maq/mq8IC+xrIYxF/vRSFXldspGHSAVkTzUz8fDao3h9BHm6vX4YFsXO278qYoyozkmbSByJCtq9MYpHtFgVCLGIgGQZolqusJkYLcnhSpVdv9CCLWiwCttbeq37upV2T3ESrtBP5AdAy3Rz1b8ki0UCxlYnmdI2o9adVhfsDpGLARlhrJcCmCvNosnIhh7OphDos3QNO3zPIQgeX/HJHWyVeRfJNJK7UFFRpX8C9AaE+Zoyd0aEDUzz+bT8hc5RoBl31RBSSJiE7FOmmagtwmoil0rLw+1jfgKuDdxqi0="
+
+before_install:
+  - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "0intro/libbele"
+      description: "Build submitted via Travis CI"
+    notification_email: 0intro@gmail.com
+    build_command_prepend: "make nuke"
+    build_command: "make"
+    branch_pattern: master
+
+script:
+  - make nuke
+  - make
